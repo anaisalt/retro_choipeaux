@@ -39,12 +39,12 @@
 <script>
 const questions = [
   {
-    text: "Un bug critique part en prod un vendredi à 17h. Tu fais quoi en premier ?",
+    text: "Une réunion démarre sans ordre du jour. Ta réaction ?",
     opts: [
-      { text: "Je plonge dans le code et tente des console.log là où ça me semble pertinent", scores: { G: 2, Sl: 1 } },
-      { text: "Je préviens l'équipe et on s'organise collectivement", scores: { P: 2, G: 1 } },
-      { text: "J'analyse les logs pour comprendre la cause avant de toucher quoi que ce soit", scores: { Se: 2, Sl: 1 } },
-      { text: "J'identifie l'impact réel et je priorise ce qui est vraiment critique", scores: { Sl: 2, Se: 1 } }
+      { text: "Je retiens pour les prochaines fois que c'est un problème à régler sur le fond", scores: { Sl: 2, Se: 1 } }
+      { text: "Ça me va, parfois les meilleures discussions sont non planifiées", scores: { G: 2, P: 1 } },
+      { text: "Je propose d'en définir un avant de commencer", scores: { Se: 2, Sl: 1 } },
+      { text: "Je m'adapte et je m'assure que tout le monde peut s'exprimer", scores: { P: 2, G: 1 } },
     ]
   },
   {
@@ -54,15 +54,6 @@ const questions = [
       { text: "Je demande à quelqu'un de me faire un brief", scores: { P: 2, G: 1 } },
       { text: "Je cartographie qui fait quoi et ce qui manque pour avancer", scores: { Sl: 2, Se: 1 } }
       { text: "Je regarde ce qui bloque en priorité et je propose de l'aide là où c'est utile", scores: { G: 2, P: 1 } },
-    ]
-  },
-  {
-    text: "Une réunion démarre sans ordre du jour. Ta réaction ?",
-    opts: [
-      { text: "Je prends note que c'est un problème à régler sur le fond", scores: { Sl: 2, Se: 1 } }
-      { text: "Ça me va, parfois les meilleures discussions sont non planifiées", scores: { G: 2, P: 1 } },
-      { text: "Je propose d'en définir un avant de commencer", scores: { Se: 2, Sl: 1 } },
-      { text: "Je m'adapte et je m'assure que tout le monde peut s'exprimer", scores: { P: 2, G: 1 } },
     ]
   },
   {
@@ -77,35 +68,44 @@ const questions = [
   {
     text: "Dans un escape game, tu…",
     opts: [
-      { text: "Prends naturellement la coordination sans forcément l'annoncer", scores: { Sl: 2, G: 1 } }
-      { text: "Touches à tout immédiatement", scores: { G: 2, P: 1 } },
-      { text: "T'assures que tout le monde est impliqué et contribue", scores: { P: 2, G: 1 } },
-      { text: "Cherches la logique globale avant d'agir", scores: { Se: 2, Sl: 1 } },
+      { text: "Prends naturellement la coordination", scores: { Sl: 2, G: 1 } }
+      { text: "Touches à tout pour trouver le plus d'indices possible", scores: { G: 2, P: 1 } },
+      { text: "Préfères résoudre les énigmes collaborativement", scores: { P: 2, G: 1 } },
+      { text: "Te poses contre un mur pour réfléchir aux indices", scores: { Se: 2, Sl: 1 } },
     ]
   },
   {
-    text: "Une décision est prise en coop avec laquelle tu es pas d'accord. Tu fais quoi ?",
+    text: "Une décision est prise collectivement avec laquelle tu n'es pas d'accord. Tu fais quoi ?",
     opts: [
+      { text: "Ça te va si la majorité est ok, mais tu notes pour la prochaine rétro", scores: { P: 2, G: 1 } },
       { text: "Tu le dis en direct en réunion", scores: { G: 2, Se: 1 } },
       { text: "Tu en parles en off pour évaluer si c'est un sentiment partagé", scores: { Sl: 2, P: 1 } }
-      { text: "Tu prépares un argumentaire et demandes qu'on en rediscute", scores: { Se: 2, Sl: 1 } },
-      { text: "Tu acceptes si c'est la majorité, mais tu notes pour la prochaine rétro", scores: { P: 2, G: 1 } },
+      { text: "Tu demandes qu'on en rediscute et prépares ta réflexion", scores: { Se: 2, Sl: 1 } },
     ]
   },
   {
-    text: "T'as une demi-journée libre sans réunion ni urgence. Tu fais quoi ?",
+    text: "On te propose de changer complètement de stack technique. Ta première réaction ?",
     opts: [
-      { text: "Tu creuses un sujet technique ou un outil qui t'intrigue", scores: { Se: 2, G: 1 } },
-      { text: "Tu en profites pour prendre des nouvelles de collègues que tu vois moins", scores: { P: 2, Se: 1 } },
-      { text: "Tu te questionnes sur ce qui pourrait mieux fonctionner dans l'équipe", scores: { Sl: 2, P: 1 } }
-      { text: "Tu fais un truc qui traîne depuis longtemps", scores: { G: 2, Sl: 1 } },
+      { text: "Ah ça pourrait être une bonne occasion d'apprendre tiens", scores: { G: 2, Se: 1 } },
+      { text: "Je regarde si ça nous rapproche ou nous éloigne de nos objectifs", scores: { Sl: 2, Se: 1 } }
+      { text: "Je pense direct à la dette qu'on accumule si la transition se passe mal", scores: { P: 2, G: 1 } },
+      { text: "Je liste les pour et les contre pour les présenter", scores: { Se: 2, Sl: 1 } },
+    ]
+  }
+  {
+    text: "Un bug critique part en prod un vendredi à 17h. Tu fais quoi en premier ?",
+    opts: [
+      { text: "J'identifie l'impact réel et je priorise ce qui est vraiment critique", scores: { Sl: 2, Se: 1 } }
+      { text: "Je plonge dans le code et tente des console.log là où ça me semble pertinent", scores: { G: 2, Sl: 1 } },
+      { text: "Je préviens l'équipe et on s'organise collectivement", scores: { P: 2, G: 1 } },
+      { text: "J'analyse les logs pour comprendre la cause avant de toucher quoi que ce soit", scores: { Se: 2, Sl: 1 } },
     ]
   },
   {
-    text: "Le compliment que tu préfères :",
+    text: "Le compliment que tu préfères dans cette liste :",
     opts: [
       { text: "\"Wah, heureusement que t'étais là !\"", scores: { G: 2, P: 1 } },
-      { text: "\"Eh, t'avais raison !\"", scores: { Se: 2, Sl: 1 } },
+      { text: "\"Eh, t'avais grave raison sur ce point en fait !\"", scores: { Se: 2, Sl: 1 } },
       { text: "\"J'aime beaucoup bosser avec toi !\"", scores: { P: 2, G: 1 } },
       { text: "\"Punaise, on aurait pas pu le faire sans toi !\"", scores: { Sl: 2, G: 1 } }
     ]
@@ -113,28 +113,28 @@ const questions = [
   {
     text: "Comment tu te comportes quand un projet part dans tous les sens ?",
     opts: [
+      { text: "Je m'assure que personne ne se noie et je propose une réunion pour en discuter", scores: { P: 2, Se: 1 } },
       { text: "Je recadre les priorités et je propose une direction claire", scores: { Sl: 2, P: 1 } }
-      { text: "Je cherche à comprendre pourquoi on en est là", scores: { Se: 2, G: 1 } },
+      { text: "Je cherche à comprendre pourquoi on en est là pour trouver la solution la plus pertinente possible", scores: { Se: 2, G: 1 } },
       { text: "Je commence à régler ce qui bloque", scores: { G: 2, Sl: 1 } },
-      { text: "Je m'assure que personne ne se noie", scores: { P: 2, Se: 1 } },
     ]
   },
   {
-    text: "On te propose de changer complètement de stack technique. Ta première réaction ?",
+    text: "Tu as une demi-journée libre sans réunion ni urgence. Tu fais quoi ?",
     opts: [
-      { text: "Banco, c'est une bonne occasion d'apprendre", scores: { G: 2, Se: 1 } },
-      { text: "Je veux comprendre pourquoi et quels sont les compromis réels", scores: { Se: 2, Sl: 1 } },
-      { text: "Je me demande comment l'équipe va vivre cette transition", scores: { P: 2, G: 1 } },
-      { text: "Je regarde si ça nous rapproche ou nous éloigne de nos objectifs", scores: { Sl: 2, Se: 1 } }
+      { text: "Tu creuses un sujet technique ou un outil qui t'intrigue", scores: { Se: 2, G: 1 } },
+      { text: "Tu en profites pour discuter avec des collègues que tu vois moins, voire pour faire une pause jeux", scores: { P: 2, Se: 1 } },
+      { text: "Tu te questionnes sur ce qui pourrait être amélioré dans la coop", scores: { Sl: 2, P: 1 } }
+      { text: "Tu fais un truc qui traîne dans le backlog depuis longtemps", scores: { G: 2, Sl: 1 } },
     ]
-  }
+  },
 ];
 
 const houses = {
-  G:  { name: "Gryffondor",  emoji: "🦁", tagline: "L'action d'abord",         desc: "Tu traites les problèmes en les affrontant, pas en les anticipant. Tu es souvent le premier à te lancer quand les autres hésitent encore — ce qui est précieux — mais parfois tu pars avant que la direction soit claire. Ton énergie embarque les gens. Ton impatience peut aussi les brusquer." },
+  G:  { name: "Gryffondor",  emoji: "🦁", tagline: "L'action d'abord", desc: "Tu traites les problèmes en les affrontant, moins en les anticipant. Tu es souvent le/la premier·e à te lancer quand les autres hésitent encore — ce qui est précieux — mais parfois tu pars avant que la direction soit claire. Ton énergie embarque les gens. Ton impatience peut aussi les brusquer." },
   Se: { name: "Serdaigle",   emoji: "🦅", tagline: "La compréhension avant tout", desc: "Tu as du mal à agir sans avoir bien cerné le problème. Ça te rend rigoureux·se et fiable sur le fond, mais parfois lent·e à démarrer ou difficile à suivre pour ceux qui ont besoin d'avancer vite. Tu poses les questions que les autres n'ont pas pensé à poser — et c'est souvent là que ça se joue." },
   P:  { name: "Poufsouffle", emoji: "🦡", tagline: "Le collectif comme boussole", desc: "Tu fais naturellement attention à ce que tout le monde soit dans la boucle. C'est une vraie force dans une équipe — tu évites beaucoup de frictions silencieuses. Mais ça peut te coûter cher quand il faut trancher vite ou dire quelque chose de difficile à quelqu'un." },
-  Sl: { name: "Serpentard",  emoji: "🐍", tagline: "La vision long terme",       desc: "Tu penses facilement en termes d'objectifs, de priorités, de ce qui vaut vraiment la peine d'investir. Ce recul est utile — mais il peut te faire paraître froid·e ou peu impliqué·e dans l'immédiat. Tu t'engages vraiment quand tu crois au projet. Quand t'y crois pas, ça se voit aussi." }
+  Sl: { name: "Serpentard",  emoji: "🐍", tagline: "La vision long terme", desc: "Tu penses facilement en termes d'objectifs, de priorités, de ce qui vaut vraiment la peine d'investir. Ce recul est utile — mais il peut te faire paraître froid·e ou peu impliqué·e dans l'immédiat. Tu t'engages vraiment quand tu crois au projet. Quand t'y crois pas, ça se voit aussi." }
 };
 
 let current = -1;
