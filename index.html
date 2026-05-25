@@ -144,7 +144,7 @@ const shuffled = questions.map(q => ({ ...q, opts: [...q.opts].sort(() => Math.r
 function render() {
   const area = document.getElementById('area');
   if (current === -1) {
-    area.innerHTML = `<div class="intro"><div class="hat-big">🎩</div><p>10 questions situationnelles pour découvrir dans quelle maison de Poudlard tu te retrouves… au travail.</p><button class="btn-pri" onclick="start()">Commencer le tri</button></div>`;
+    area.innerHTML = `<div class="intro"><div class="hat-big">🎩</div><h1 style="font-size:26px;font-weight:700;color:#e2c97e;margin-bottom:0.75rem;">Bienvenue sur le ChoixPro Magique</h1><p>10 questions situationnelles pour découvrir dans quelle maison de Poudlard tu te retrouves au travail.</p><button class="btn-pri" onclick="start()">Commencer le tri</button></div>`;
     return;
   }
   if (current >= shuffled.length) { renderResult(area); return; }
