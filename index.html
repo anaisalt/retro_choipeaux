@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Le ChoixPro Magique</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #1a1a2e; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1.5rem; color: #eee; }
+    .card { background: #16213e; border: 1px solid #0f3460; border-radius: 16px; padding: 2rem 2.5rem; max-width: 620px; width: 100%; box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
+    .progress-bar { height: 4px; background: #0f3460; border-radius: 2px; margin-bottom: 2rem; }
+    .progress-fill { height: 4px; background: #e2c97e; border-radius: 2px; transition: width 0.4s ease; }
+    .q-num { font-size: 13px; color: #8899aa; margin-bottom: 0.5rem; }
+    .q-text { font-size: 17px; font-weight: 500; color: #eee; margin-bottom: 1.5rem; line-height: 1.5; }
+    .options { display: flex; flex-direction: column; gap: 10px; }
+    .opt { padding: 13px 16px; border: 1px solid #0f3460; border-radius: 10px; cursor: pointer; font-size: 15px; color: #ccd6f6; background: #0d1b2a; transition: background 0.15s, border-color 0.15s; text-align: left; line-height: 1.4; }
+    .opt:hover { background: #0f3460; border-color: #e2c97e55; }
+    .opt.selected { border-color: #e2c97e; background: #1a2a1a; color: #e2c97e; }
+    .nav { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; }
+    .btn-sec { font-size: 14px; color: #8899aa; background: none; border: 1px solid #0f3460; border-radius: 8px; padding: 8px 14px; cursor: pointer; }
+    .btn-sec:hover { border-color: #8899aa; color: #eee; }
+    .btn-pri { padding: 11px 22px; background: #e2c97e; color: #1a1a2e; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; }
+    .btn-pri:hover { opacity: 0.88; }
+    .result-wrap { text-align: center; padding: 1rem 0; }
+    .house-emoji { font-size: 64px; margin-bottom: 0.75rem; }
+    .house-name { font-size: 28px; font-weight: 700; color: #e2c97e; margin-bottom: 0.25rem; }
+    .house-tagline { font-size: 15px; color: #8899aa; margin-bottom: 1.5rem; font-style: italic; }
+    .house-desc { font-size: 15px; color: #ccd6f6; line-height: 1.75; text-align: left; background: #0d1b2a; padding: 1rem 1.25rem; border-radius: 12px; border: 1px solid #0f3460; margin-bottom: 1.25rem; }
+    .scores-detail { font-size: 13px; color: #556677; margin-bottom: 1.5rem; }
+    .intro { text-align: center; }
+    .hat-big { font-size: 56px; margin-bottom: 1rem; }
+    .intro p { font-size: 15px; color: #8899aa; line-height: 1.7; margin-bottom: 2rem; }
+  </style>
+</head>
+<body>
+<div class="card">
+  <div id="area"></div>
+</div>
+<script>
+const questions = [
+  {
+    text: "Un bug critique part en prod un vendredi à 17h. Tu fais quoi en premier ?",
+    opts: [
+      { text: "Je plonge dans le code et tente des console.log là où ça me semble pertinent", scores: { G: 2, Sl: 1 } },
+      { text: "Je préviens l'équipe et on s'organise collectivement", scores: { P: 2, G: 1 } },
+      { text: "J'analyse les logs pour comprendre la cause avant de toucher quoi que ce soit", scores: { Se: 2, Sl: 1 } },
+      { text: "J'identifie l'impact réel et je priorise ce qui est vraiment critique", scores: { Sl: 2, Se: 1 } }
+    ]
+  },
+  {
+    text: "Tu arrives en retard dans un projet déjà bien lancé. Tu fais quoi en premier ?",
+    opts: [
+      { text: "Je lis tout ce que je peux trouver pour comprendre les décisions prises", scores: { Se: 2, Sl: 1 } },
+      { text: "Je demande à quelqu'un de me faire un brief", scores: { P: 2, G: 1 } },
+      { text: "Je cartographie qui fait quoi et ce qui manque pour avancer", scores: { Sl: 2, Se: 1 } }
+      { text: "Je regarde ce qui bloque en priorité et je propose de l'aide là où c'est utile", scores: { G: 2, P: 1 } },
+    ]
+  },
+  {
+    text: "Une réunion démarre sans ordre du jour. Ta réaction ?",
+    opts: [
+      { text: "Je prends note que c'est un problème à régler sur le fond", scores: { Sl: 2, Se: 1 } }
+      { text: "Ça me va, parfois les meilleures discussions sont non planifiées", scores: { G: 2, P: 1 } },
+      { text: "Je propose d'en définir un avant de commencer", scores: { Se: 2, Sl: 1 } },
+      { text: "Je m'adapte et je m'assure que tout le monde peut s'exprimer", scores: { P: 2, G: 1 } },
+    ]
+  },
+  {
+    text: "Quelqu'un dans l'équipe livre un truc clairement bof. Tu fais quoi ?",
+    opts: [
+      { text: "Je lui propose de retravailler ça ensemble", scores: { P: 2, G: 1 } },
+      { text: "Je note ce pattern pour voir si c'est ponctuel ou récurrent", scores: { Sl: 2, Se: 1 } }
+      { text: "Je cherche à comprendre pourquoi ça s'est passé comme ça avant de réagir", scores: { Se: 2, P: 1 } },
+      { text: "Je lui dis directement, avec bienveillance mais sans détour", scores: { G: 2, Se: 1 } },
+    ]
+  },
+  {
+    text: "Dans un escape game, tu…",
+    opts: [
+      { text: "Prends naturellement la coordination sans forcément l'annoncer", scores: { Sl: 2, G: 1 } }
+      { text: "Touches à tout immédiatement", scores: { G: 2, P: 1 } },
+      { text: "T'assures que tout le monde est impliqué et contribue", scores: { P: 2, G: 1 } },
+      { text: "Cherches la logique globale avant d'agir", scores: { Se: 2, Sl: 1 } },
+    ]
+  },
+  {
+    text: "Une décision est prise en coop avec laquelle tu es pas d'accord. Tu fais quoi ?",
+    opts: [
+      { text: "Tu le dis en direct en réunion", scores: { G: 2, Se: 1 } },
+      { text: "Tu en parles en off pour évaluer si c'est un sentiment partagé", scores: { Sl: 2, P: 1 } }
+      { text: "Tu prépares un argumentaire et demandes qu'on en rediscute", scores: { Se: 2, Sl: 1 } },
+      { text: "Tu acceptes si c'est la majorité, mais tu notes pour la prochaine rétro", scores: { P: 2, G: 1 } },
+    ]
+  },
+  {
+    text: "T'as une demi-journée libre sans réunion ni urgence. Tu fais quoi ?",
+    opts: [
+      { text: "Tu creuses un sujet technique ou un outil qui t'intrigue", scores: { Se: 2, G: 1 } },
+      { text: "Tu en profites pour prendre des nouvelles de collègues que tu vois moins", scores: { P: 2, Se: 1 } },
+      { text: "Tu te questionnes sur ce qui pourrait mieux fonctionner dans l'équipe", scores: { Sl: 2, P: 1 } }
+      { text: "Tu fais un truc qui traîne depuis longtemps", scores: { G: 2, Sl: 1 } },
+    ]
+  },
+  {
+    text: "Le compliment que tu préfères :",
+    opts: [
+      { text: "\"Wah, heureusement que t'étais là !\"", scores: { G: 2, P: 1 } },
+      { text: "\"Eh, t'avais raison !\"", scores: { Se: 2, Sl: 1 } },
+      { text: "\"J'aime beaucoup bosser avec toi !\"", scores: { P: 2, G: 1 } },
+      { text: "\"Punaise, on aurait pas pu le faire sans toi !\"", scores: { Sl: 2, G: 1 } }
+    ]
+  },
+  {
+    text: "Comment tu te comportes quand un projet part dans tous les sens ?",
+    opts: [
+      { text: "Je recadre les priorités et je propose une direction claire", scores: { Sl: 2, P: 1 } }
+      { text: "Je cherche à comprendre pourquoi on en est là", scores: { Se: 2, G: 1 } },
+      { text: "Je commence à régler ce qui bloque", scores: { G: 2, Sl: 1 } },
+      { text: "Je m'assure que personne ne se noie", scores: { P: 2, Se: 1 } },
+    ]
+  },
+  {
+    text: "On te propose de changer complètement de stack technique. Ta première réaction ?",
+    opts: [
+      { text: "Banco, c'est une bonne occasion d'apprendre", scores: { G: 2, Se: 1 } },
+      { text: "Je veux comprendre pourquoi et quels sont les compromis réels", scores: { Se: 2, Sl: 1 } },
+      { text: "Je me demande comment l'équipe va vivre cette transition", scores: { P: 2, G: 1 } },
+      { text: "Je regarde si ça nous rapproche ou nous éloigne de nos objectifs", scores: { Sl: 2, Se: 1 } }
+    ]
+  }
+];
+
+const houses = {
+  G:  { name: "Gryffondor",  emoji: "🦁", tagline: "L'action d'abord",         desc: "Tu traites les problèmes en les affrontant, pas en les anticipant. Tu es souvent le premier à te lancer quand les autres hésitent encore — ce qui est précieux — mais parfois tu pars avant que la direction soit claire. Ton énergie embarque les gens. Ton impatience peut aussi les brusquer." },
+  Se: { name: "Serdaigle",   emoji: "🦅", tagline: "La compréhension avant tout", desc: "Tu as du mal à agir sans avoir bien cerné le problème. Ça te rend rigoureux·se et fiable sur le fond, mais parfois lent·e à démarrer ou difficile à suivre pour ceux qui ont besoin d'avancer vite. Tu poses les questions que les autres n'ont pas pensé à poser — et c'est souvent là que ça se joue." },
+  P:  { name: "Poufsouffle", emoji: "🦡", tagline: "Le collectif comme boussole", desc: "Tu fais naturellement attention à ce que tout le monde soit dans la boucle. C'est une vraie force dans une équipe — tu évites beaucoup de frictions silencieuses. Mais ça peut te coûter cher quand il faut trancher vite ou dire quelque chose de difficile à quelqu'un." },
+  Sl: { name: "Serpentard",  emoji: "🐍", tagline: "La vision long terme",       desc: "Tu penses facilement en termes d'objectifs, de priorités, de ce qui vaut vraiment la peine d'investir. Ce recul est utile — mais il peut te faire paraître froid·e ou peu impliqué·e dans l'immédiat. Tu t'engages vraiment quand tu crois au projet. Quand t'y crois pas, ça se voit aussi." }
+};
+
+let current = -1;
+let answers = [];
+const shuffled = questions.map(q => ({ ...q, opts: [...q.opts].sort(() => Math.random() - 0.5) }));
+
+function render() {
+  const area = document.getElementById('area');
+  if (current === -1) {
+    area.innerHTML = `<div class="intro"><div class="hat-big">🎩</div><p>10 questions situationnelles pour découvrir dans quelle maison de Poudlard tu te retrouves… au travail.</p><button class="btn-pri" onclick="start()">Commencer le tri</button></div>`;
+    return;
+  }
+  if (current >= shuffled.length) { renderResult(area); return; }
+  const q = shuffled[current];
+  const pct = Math.round((current / shuffled.length) * 100);
+  area.innerHTML = `
+    <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+    <div class="q-num">Question ${current + 1} sur ${shuffled.length}</div>
+    <div class="q-text">${q.text}</div>
+    <div class="options">${q.opts.map((o,i) => `<button class="opt${answers[current]===i?' selected':''}" onclick="pick(${i})">${o.text}</button>`).join('')}</div>
+    <div class="nav">
+      ${current > 0 ? `<button class="btn-sec" onclick="back()">← Retour</button>` : '<span></span>'}
+      ${answers[current] !== undefined ? `<button class="btn-pri" onclick="next()">${current === shuffled.length-1 ? 'Voir ma maison ✨' : 'Suivant →'}</button>` : ''}
+    </div>`;
+}
+
+function renderResult(area) {
+  const scores = { G: 0, Se: 0, P: 0, Sl: 0 };
+  shuffled.forEach((q, qi) => {
+    if (answers[qi] !== undefined) Object.entries(q.opts[answers[qi]].scores).forEach(([h,v]) => { scores[h] += v; });
+  });
+  const winner = Object.entries(scores).sort((a,b) => b[1]-a[1])[0][0];
+  const h = houses[winner];
+  area.innerHTML = `
+    <div class="result-wrap">
+      <div class="house-emoji">${h.emoji}</div>
+      <div class="house-name">${h.name}</div>
+      <div class="house-tagline">${h.tagline}</div>
+      <div class="house-desc">${h.desc}</div>
+      <div class="scores-detail">Gryffondor ${scores.G} · Serdaigle ${scores.Se} · Poufsouffle ${scores.P} · Serpentard ${scores.Sl}</div>
+      <button class="btn-sec" onclick="restart()">Recommencer</button>
+    </div>`;
+}
+
+function start() { current = 0; render(); }
+function pick(i) { answers[current] = i; render(); }
+function next() { if (answers[current] !== undefined) { current++; render(); } }
+function back() { if (current > 0) { current--; render(); } }
+function restart() { current = -1; answers = []; render(); }
+
+render();
+</script>
+</body>
+</html>
