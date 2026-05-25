@@ -41,10 +41,10 @@ const questions = [
   {
     text: "Une réunion démarre sans ordre du jour. Ta réaction ?",
     opts: [
-      { text: "Je retiens pour les prochaines fois que c'est un problème à régler sur le fond", scores: { Sl: 2, Se: 1 } }
+      { text: "Je retiens pour les prochaines fois que c'est un problème à régler sur le fond", scores: { Sl: 2, Se: 1 } },
       { text: "Ça me va, parfois les meilleures discussions sont non planifiées", scores: { G: 2, P: 1 } },
       { text: "Je propose d'en définir un avant de commencer", scores: { Se: 2, Sl: 1 } },
-      { text: "Je m'adapte et je m'assure que tout le monde peut s'exprimer", scores: { P: 2, G: 1 } },
+      { text: "Je m'adapte et je m'assure que tout le monde peut s'exprimer", scores: { P: 2, G: 1 } }
     ]
   },
   {
@@ -52,26 +52,26 @@ const questions = [
     opts: [
       { text: "Je lis tout ce que je peux trouver pour comprendre les décisions prises", scores: { Se: 2, Sl: 1 } },
       { text: "Je demande à quelqu'un de me faire un brief", scores: { P: 2, G: 1 } },
-      { text: "Je cartographie qui fait quoi et ce qui manque pour avancer", scores: { Sl: 2, Se: 1 } }
-      { text: "Je regarde ce qui bloque en priorité et je propose de l'aide là où c'est utile", scores: { G: 2, P: 1 } },
+      { text: "Je cartographie qui fait quoi et ce qui manque pour avancer", scores: { Sl: 2, Se: 1 } },
+      { text: "Je regarde ce qui bloque en priorité et je propose de l'aide là où c'est utile", scores: { G: 2, P: 1 } }
     ]
   },
   {
     text: "Quelqu'un dans l'équipe livre un truc clairement bof. Tu fais quoi ?",
     opts: [
       { text: "Je lui propose de retravailler ça ensemble", scores: { P: 2, G: 1 } },
-      { text: "Je note ce pattern pour voir si c'est ponctuel ou récurrent", scores: { Sl: 2, Se: 1 } }
+      { text: "Je note ce pattern pour voir si c'est ponctuel ou récurrent", scores: { Sl: 2, Se: 1 } },
       { text: "Je cherche à comprendre pourquoi ça s'est passé comme ça avant de réagir", scores: { Se: 2, P: 1 } },
-      { text: "Je lui dis directement, avec bienveillance mais sans détour", scores: { G: 2, Se: 1 } },
+      { text: "Je lui dis directement, avec bienveillance mais sans détour", scores: { G: 2, Se: 1 } }
     ]
   },
   {
     text: "Dans un escape game, tu…",
     opts: [
-      { text: "Prends naturellement la coordination", scores: { Sl: 2, G: 1 } }
+      { text: "Prends naturellement la coordination", scores: { Sl: 2, G: 1 } },
       { text: "Touches à tout pour trouver le plus d'indices possible", scores: { G: 2, P: 1 } },
       { text: "Préfères résoudre les énigmes collaborativement", scores: { P: 2, G: 1 } },
-      { text: "Te poses contre un mur pour réfléchir aux indices", scores: { Se: 2, Sl: 1 } },
+      { text: "Te poses contre un mur pour réfléchir aux indices", scores: { Se: 2, Sl: 1 } }
     ]
   },
   {
@@ -79,26 +79,26 @@ const questions = [
     opts: [
       { text: "Ça te va si la majorité est ok, mais tu notes pour la prochaine rétro", scores: { P: 2, G: 1 } },
       { text: "Tu le dis en direct en réunion", scores: { G: 2, Se: 1 } },
-      { text: "Tu en parles en off pour évaluer si c'est un sentiment partagé", scores: { Sl: 2, P: 1 } }
-      { text: "Tu demandes qu'on en rediscute et prépares ta réflexion", scores: { Se: 2, Sl: 1 } },
+      { text: "Tu en parles en off pour évaluer si c'est un sentiment partagé", scores: { Sl: 2, P: 1 } },
+      { text: "Tu demandes qu'on en rediscute et prépares ta réflexion", scores: { Se: 2, Sl: 1 } }
     ]
   },
   {
     text: "On te propose de changer complètement de stack technique. Ta première réaction ?",
     opts: [
       { text: "Ah ça pourrait être une bonne occasion d'apprendre tiens", scores: { G: 2, Se: 1 } },
-      { text: "Je regarde si ça nous rapproche ou nous éloigne de nos objectifs", scores: { Sl: 2, Se: 1 } }
+      { text: "Je regarde si ça nous rapproche ou nous éloigne de nos objectifs", scores: { Sl: 2, Se: 1 } },
       { text: "Je pense direct à la dette qu'on accumule si la transition se passe mal", scores: { P: 2, G: 1 } },
-      { text: "Je liste les pour et les contre pour les présenter", scores: { Se: 2, Sl: 1 } },
+      { text: "Je liste les pour et les contre pour les présenter", scores: { Se: 2, Sl: 1 } }
     ]
   }
   {
     text: "Un bug critique part en prod un vendredi à 17h. Tu fais quoi en premier ?",
     opts: [
-      { text: "J'identifie l'impact réel et je priorise ce qui est vraiment critique", scores: { Sl: 2, Se: 1 } }
+      { text: "J'identifie l'impact réel et je priorise ce qui est vraiment critique", scores: { Sl: 2, Se: 1 } },
       { text: "Je plonge dans le code et tente des console.log là où ça me semble pertinent", scores: { G: 2, Sl: 1 } },
       { text: "Je préviens l'équipe et on s'organise collectivement", scores: { P: 2, G: 1 } },
-      { text: "J'analyse les logs pour comprendre la cause avant de toucher quoi que ce soit", scores: { Se: 2, Sl: 1 } },
+      { text: "J'analyse les logs pour comprendre la cause avant de toucher quoi que ce soit", scores: { Se: 2, Sl: 1 } }
     ]
   },
   {
@@ -114,9 +114,9 @@ const questions = [
     text: "Comment tu te comportes quand un projet part dans tous les sens ?",
     opts: [
       { text: "Je m'assure que personne ne se noie et je propose une réunion pour en discuter", scores: { P: 2, Se: 1 } },
-      { text: "Je recadre les priorités et je propose une direction claire", scores: { Sl: 2, P: 1 } }
+      { text: "Je recadre les priorités et je propose une direction claire", scores: { Sl: 2, P: 1 } },
       { text: "Je cherche à comprendre pourquoi on en est là pour trouver la solution la plus pertinente possible", scores: { Se: 2, G: 1 } },
-      { text: "Je commence à régler ce qui bloque", scores: { G: 2, Sl: 1 } },
+      { text: "Je commence à régler ce qui bloque", scores: { G: 2, Sl: 1 } }
     ]
   },
   {
@@ -124,8 +124,8 @@ const questions = [
     opts: [
       { text: "Tu creuses un sujet technique ou un outil qui t'intrigue", scores: { Se: 2, G: 1 } },
       { text: "Tu en profites pour discuter avec des collègues que tu vois moins, voire pour faire une pause jeux", scores: { P: 2, Se: 1 } },
-      { text: "Tu te questionnes sur ce qui pourrait être amélioré dans la coop", scores: { Sl: 2, P: 1 } }
-      { text: "Tu fais un truc qui traîne dans le backlog depuis longtemps", scores: { G: 2, Sl: 1 } },
+      { text: "Tu te questionnes sur ce qui pourrait être amélioré dans la coop", scores: { Sl: 2, P: 1 } },
+      { text: "Tu fais un truc qui traîne dans le backlog depuis longtemps", scores: { G: 2, Sl: 1 } }
     ]
   },
 ];
